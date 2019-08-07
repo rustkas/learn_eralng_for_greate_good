@@ -42,16 +42,16 @@ reverse([H|T]) -> reverse(T)++[H].
 
 tail_reverse(L) -> tail_reverse(L,[]).
 
-tail_reverse([], Acc) when is_integer(Acc)-> Acc;
-tail_reverse([H|T], Acc) when is_integer(Acc) -> tail_reverse(T, [H|Acc]).
+tail_reverse([], Acc) when is_list(Acc)-> Acc;
+tail_reverse([H|T], Acc) when is_list(Acc) -> tail_reverse(T, [H|Acc]).
 
 sublist(_, 0) -> [];
 sublist([], _ ) -> [];
 sublist([H|T], N) when is_integer(N), N > 0 -> [H|sublist(T, N-1)];
 sublist(N, [H|T]) when is_integer(N), N > 0 -> [H|sublist(T, N-1)].
 
-tail_sublist(N, L) when is_integer(N), is_list(L) -> tail_sublist(L, N, []);
-tail_sublist(L, N) when is_integer(N), is_list(L) -> tail_sublist(L, N, []).
+tail_sublist(N, L) when is_integer(N), is_list(L) -> tail_reverse(tail_sublist(L, N, []));
+tail_sublist(L, N) when is_integer(N), is_list(L) -> tail_reverse(tail_sublist(L, N, [])).
 
 tail_sublist([], _, SubList) when is_list(SubList) -> SubList;
 tail_sublist(_, [], SubList) when is_list(SubList) -> SubList;
